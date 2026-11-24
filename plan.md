@@ -4,7 +4,9 @@ Next.js 16 (App Router, TypeScript) · PostgreSQL 15 · Drizzle ORM · Tailwind 
 
 Spira copies the **features and flows** of a full Swedish retail broker such as Avanza: BankID login and signing, ISK/KF/AF accounts, courtage classes, order book, order handling, funds, monthly savings, price alerts, ISK tax, and so on. It uses **its own name, logo and colours**, so it can never be mistaken for the real bank.
 
-Status legend: ✅ done · 🟡 partial / simulated · ⬜ not started
+Status legend: ✅ done · 🟡 partial / simulated / not verified · ⬜ not started
+
+Last updated: 2026-11-24.
 
 ---
 
@@ -29,13 +31,13 @@ Status legend: ✅ done · 🟡 partial / simulated · ⬜ not started
 - ✅ Design system: colours, cards, buttons, tables, number formatting in Swedish (`1 234,56 kr`, `+1,23 %`)
 - ✅ Swedish utilities: personnummer validation (Luhn, 10/12 digits), market hours and Swedish exchange holidays 2025–2027, settlement date (T+2)
 
-## Sprint 1 – BankID and authentication ✅
+## Sprint 1 – BankID and authentication ✅ (test environment 🟡)
 - ✅ BankID RP API v6 client: `auth`, `sign`, `collect`, `cancel`
 - ✅ Animated QR code (`bankid.<qrStartToken>.<seconds>.<HMAC-SHA256(qrStartSecret, seconds)>`), refreshed every second
 - ✅ "Mobilt BankID" (QR) and "BankID på den här enheten" (autostart token, `bankid:///?autostarttoken=…`)
 - ✅ Every hint code shown with the recommended Swedish user messages (RFA1, RFA2, RFA3, RFA4, RFA5, RFA6, RFA8, RFA9, RFA13, RFA15, RFA16, RFA17, RFA19, RFA21, RFA22, RFA23)
 - ✅ **BankID simulator** (`/bankid-simulator`): a phone-style "BankID app" where you pick or enter a personnummer, see the text to sign, type a security code and approve. Same state machine as the real service (`outstandingTransaction → started → userSign → complete`), including the "cancel" and "start failed / timeout" paths
-- ✅ **Real BankID test environment** (`BANKID_MODE=test`): mTLS with the public RP test certificate against `appapi2.test.bankid.com`
+- 🟡 **Real BankID test environment** (`BANKID_MODE=test`): mTLS client written for `appapi2.test.bankid.com`, but **not yet run against it** (needs the test certificate and a test BankID on a phone)
 - ✅ BankID **signing** reused for: customer agreement, opening accounts, withdrawals, adding a bank account
 - ✅ DB sessions (hashed token, httpOnly cookie, 30 min sliding inactivity timeout like a bank), logout, "log out everywhere"
 - ✅ Login history (time, method, IP, device)
@@ -75,7 +77,7 @@ Status legend: ✅ done · 🟡 partial / simulated · ⬜ not started
 - ✅ Currency-exchange fee (0.25 %) for foreign stocks
 - ✅ Buying power: cash minus reserved active buy orders; sell orders reserve units
 - ✅ Order matching: Stockholm opening hours (09:00–17:30 CET, holidays), US hours for US stocks, limit-price crossing, funds executed at the next NAV after the 15:00 cut-off
-- ✅ Order expiry, cancel and change orders
+- ✅ Order expiry, cancel and change orders (change = cancel and re-place, original restored on failure)
 - ✅ Transactions with settlement date, average price (GAV) including courtage
 - ✅ Notifications when orders are filled
 
@@ -111,11 +113,18 @@ Status legend: ✅ done · 🟡 partial / simulated · ⬜ not started
 - ✅ Tax-return data (deklarationsunderlag): realised gains and losses per year for AF accounts (K4-style list)
 - ✅ Login history, active sessions, log out everywhere
 
-## Sprint 11 – Polish ✅
-- ✅ Responsive layout with a mobile bottom tab bar
+## Sprint 11 – Polish ✅ (mobile and dark mode review 🟡)
+- 🟡 Responsive layout with a mobile bottom tab bar and dark mode (built, not yet visually reviewed on a phone or in dark mode)
 - ✅ Loading skeletons, error boundaries, empty states, 404
-- ✅ Unit tests (Vitest): personnummer, courtage, tick sizes, market hours, BankID QR, order matching
+- ✅ Unit tests (Vitest, 23 tests): personnummer, courtage, tick sizes, market hours, settlement, fund cut-off, BankID QR (incl. the official reference vector), formatting, ISK rate
+- ✅ Order engine verified with an integration run against live prices (US fill, Stockholm reservation and cancel, validation errors, fund NAV scheduling)
 - ✅ Production build passes, lint passes
+
+## Sprint 12 – Public start page ✅
+- ✅ Live index ticker strip (OMXS30, OMXSPI, S&P 500, Nasdaq, DAX, USD/SEK, EUR/SEK, gold, Bitcoin)
+- ✅ Hero with "Bli kund" call to action, original illustrations, white and mint section backgrounds
+- ✅ "Samla ditt sparande", "Aktuellt från Spira" cards, interactive savings calculator (compound interest)
+- ✅ "Så kommer du igång" steps, mobile section, "Lär dig mer", "Redo för nästa steg?", trust section, risk information, full footer
 
 ---
 
