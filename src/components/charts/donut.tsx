@@ -6,19 +6,18 @@ export function Donut({ items, size = 140 }: { items: { label: string; value: nu
   const total = items.reduce((s, i) => s + Math.max(0, i.value), 0) || 1;
   const r = 50;
   const c = 2 * Math.PI * r;
-  let off = 0;
+  const segs = items.reduce<{ len: number; off: number }[]>((acc, it) => {
+    const prev = acc[acc.length - 1];
+    acc.push({ len: (Math.max(0, it.value) / total) * c, off: prev ? prev.off + prev.len : 0 });
+    return acc;
+  }, []);
   return (
     <div className="flex items-center gap-5">
       <svg width={size} height={size} viewBox="0 0 120 120" className="-rotate-90 shrink-0">
         <circle cx="60" cy="60" r={r} fill="none" stroke="var(--surface-2)" strokeWidth="16" />
-        {items.map((it, i) => {
-          const len = (Math.max(0, it.value) / total) * c;
-          const el = (
-            <circle key={it.label} cx="60" cy="60" r={r} fill="none" stroke={COLORS[i % COLORS.length]} strokeWidth="16" strokeDasharray={`${len} ${c - len}`} strokeDashoffset={-off} />
-          );
-          off += len;
-          return el;
-        })}
+        {items.map((it, i) => (
+          <circle key={it.label} cx="60" cy="60" r={r} fill="none" stroke={COLORS[i % COLORS.length]} strokeWidth="16" strokeDasharray={`${segs[i].len} ${c - segs[i].len}`} strokeDashoffset={-segs[i].off} />
+        ))}
       </svg>
       <ul className="space-y-1.5 text-sm">
         {items.map((it, i) => (

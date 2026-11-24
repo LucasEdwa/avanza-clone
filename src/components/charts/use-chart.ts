@@ -31,7 +31,19 @@ export function useAreaChart(opts: {
       layout: { background: { type: ColorType.Solid, color: "transparent" }, textColor: cssVar("--muted"), fontFamily: "inherit", attributionLogo: false },
       grid: { vertLines: { visible: false }, horzLines: { color: cssVar("--border"), style: LineStyle.Dotted } },
       rightPriceScale: { borderVisible: false },
-      timeScale: { borderVisible: false, timeVisible: intraday, secondsVisible: false, fixLeftEdge: true, fixRightEdge: true },
+      timeScale: {
+        borderVisible: false,
+        timeVisible: intraday,
+        secondsVisible: false,
+        fixLeftEdge: true,
+        fixRightEdge: true,
+        // Axis labels in Stockholm time (the library defaults to UTC)
+        tickMarkFormatter: (t: number, type: number) =>
+          new Intl.DateTimeFormat("sv-SE", {
+            timeZone: "Europe/Stockholm",
+            ...(type >= 3 ? { hour: "2-digit", minute: "2-digit" } : type === 2 ? { day: "numeric", month: "short" } : type === 1 ? { month: "short" } : { year: "numeric" }),
+          }).format(new Date(t * 1000)),
+      },
       crosshair: { horzLine: { labelBackgroundColor: cssVar("--fg") }, vertLine: { labelBackgroundColor: cssVar("--fg") } },
       localization: {
         locale: "sv-SE",

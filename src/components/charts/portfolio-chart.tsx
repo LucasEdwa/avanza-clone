@@ -21,12 +21,13 @@ export function PortfolioChart({ points, height = 260 }: { points: P[]; height?:
 
   const slice = useMemo(() => {
     const days = RANGES.find((r) => r[0] === range)![1];
-    if (days === 0) return points;
-    const from = days === -1 ? Date.UTC(new Date().getFullYear(), 0, 1) / 1000 - 86400 * 3 : Date.now() / 1000 - days * 86400;
-    let s = points.filter((p) => p.t >= from);
+    if (days === 0 || !points.length) return points;
+    const now = points[points.length - 1].t;
+    const yearStart = Date.UTC(new Date(now * 1000).getUTCFullYear(), 0, 1) / 1000;
+    let s = points.filter((p) => p.t >= (days === -1 ? yearStart : now - days * 86400));
     if (days === -1) {
-      const before = points.filter((p) => p.t < Date.UTC(new Date().getFullYear(), 0, 1) / 1000);
-      if (before.length) s = [before[before.length - 1], ...points.filter((p) => p.t >= Date.UTC(new Date().getFullYear(), 0, 1) / 1000)];
+      const before = points.filter((p) => p.t < yearStart);
+      if (before.length) s = [before[before.length - 1], ...s];
     }
     return s.length ? s : points;
   }, [points, range]);
