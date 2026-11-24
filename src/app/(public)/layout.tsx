@@ -1,58 +1,20 @@
 import Link from "next/link";
 import { Logo } from "@/components/logo";
-import { getUser } from "@/lib/auth";
-import { TickerBar } from "@/components/landing/ticker-bar";
-
-const NAV = [
-  ["Spara & investera", "/marknad/fonder"],
-  ["Börsen", "/marknad"],
-  ["Aktier", "/marknad/aktier"],
-  ["ETF:er", "/marknad/borshandlade-fonder"],
-  ["Kundservice", "/logga-in"],
-];
+import { PublicHeader } from "@/components/site/public-header";
 
 const FOOTER: [string, [string, string][]][] = [
-  ["Vill du ha hjälp?", [["Frågor & svar", "/logga-in"], ["Kontakta oss", "/logga-in"]]],
-  ["Spara", [["Investeringssparkonto", "/logga-in?ny=1"], ["Kapitalförsäkring", "/logga-in?ny=1"], ["Sparkonto", "/logga-in?ny=1"], ["Månadsspara", "/logga-in?ny=1"]]],
+  ["Vill du ha hjälp?", [["Frågor om pengar", "/info/fragor"], ["Kom igång", "/info/kom-igang"], ["Öppettider", "/info/oppettider"]]],
+  ["Spara", [["Konton", "/info/konton"], ["Sparkonto", "/info/sparkonto"], ["Månadsspara", "/info/manadsspara"], ["Bolån", "/info/bolan"]]],
   ["Marknad", [["Marknaden idag", "/marknad"], ["Aktier", "/marknad/aktier"], ["Fonder", "/marknad/fonder"], ["Börshandlade fonder", "/marknad/borshandlade-fonder"]]],
-  ["Om Spira", [["Prislista", "/logga-in?ny=1"], ["Säkerhet & BankID", "/logga-in"], ["Karriär", "/"]]],
+  ["Om Spira", [["Prislista", "/info/prislista"], ["Produktnyheter", "/info/produktnyheter"], ["Spirapodden", "/info/podden"]]],
 ];
 
 const LEGAL = ["Användarvillkor", "Säkerhet", "Klagomål", "Cookies", "Tillgänglighet", "Personuppgifter"];
 
-export default async function PublicLayout({ children }: LayoutProps<"/">) {
-  const user = await getUser();
+export default function PublicLayout({ children }: LayoutProps<"/">) {
   return (
     <div className="flex min-h-screen flex-col">
-      <TickerBar />
-      <header className="sticky top-0 z-40 border-b border-border bg-surface/95 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-4">
-          <Logo />
-          <nav className="hidden items-center gap-1 lg:flex">
-            {NAV.map(([l, h]) => (
-              <Link key={l} href={h} className="rounded-full px-3 py-1.5 text-sm font-medium text-muted hover:text-fg">
-                {l}
-              </Link>
-            ))}
-          </nav>
-          <div className="ml-auto flex items-center gap-2">
-            {user ? (
-              <Link href="/min-ekonomi/oversikt" className="btn-primary">
-                Min ekonomi
-              </Link>
-            ) : (
-              <>
-                <Link href="/logga-in" className="btn-secondary">
-                  Logga in
-                </Link>
-                <Link href="/logga-in?ny=1" className="btn-primary hidden sm:inline-flex">
-                  Bli kund
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      </header>
+      <PublicHeader />
       <main className="flex-1">{children}</main>
       <footer className="border-t border-border bg-surface">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 md:grid-cols-5">

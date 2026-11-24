@@ -1,5 +1,6 @@
 import { getUser } from "@/lib/auth";
 import { Header } from "@/components/shell/header";
+import { PublicHeader } from "@/components/site/public-header";
 import { BottomNav } from "@/components/shell/bottom-nav";
 import { SessionTimer } from "@/components/shell/session-timer";
 
@@ -7,7 +8,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
   const user = await getUser();
   return (
     <div className="flex min-h-screen flex-col">
-      <Header user={user} />
+      {user ? <Header user={user} /> : <PublicHeader />}
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pt-6 pb-24 md:pb-12">{children}</main>
       {user ? (
         <>
