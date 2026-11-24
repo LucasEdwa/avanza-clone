@@ -185,7 +185,7 @@ const T: Topic[] = [
     slug: "aktier",
     title: "Så handlar du aktier",
     lead: "Bli delägare i bolag du tror på. Handla svenska och utländska aktier direkt i webben och mobilen, från 1 kr i courtage.",
-    points: ["Över 100 aktier på Stockholmsbörsen, i USA och Norden", "Realtidskurser under börsens öppettider", "Limit- och stop loss-ordrar", "0 kr courtage som ny kund upp till 50 000 kr"],
+    points: ["Över 100 aktier på Stockholmsbörsen, i USA och Norden", "Kurser som uppdateras löpande under börsens öppettider", "Limit- och stop loss-ordrar", "0 kr courtage som ny kund upp till 50 000 kr"],
     sections: [
       { h: "Så fungerar en aktieaffär", p: "Du lägger en order med antal och pris. När någon på marknaden vill sälja till ditt pris eller lägre blir det en affär. Likviden dras två bankdagar senare (T+2), men du ser innehavet direkt." },
       { h: "Risk", p: "Aktier kan både stiga och falla kraftigt i värde. Sprid ditt sparande på flera bolag och branscher och ha en lång tidshorisont." },
@@ -280,7 +280,7 @@ const T: Topic[] = [
   {
     slug: "pro",
     title: "Pro för aktiva handlare",
-    lead: "För dig som handlar ofta. Snabbare verktyg, orderdjup i realtid och lägre courtage vid hög volym.",
+    lead: "För dig som handlar ofta. Snabbare verktyg, fullt orderdjup och lägre courtage vid hög volym.",
     points: ["Avancerade ordertyper", "Grafverktyg och tekniska indikatorer", "Volymrabatt på courtage"],
   },
   {

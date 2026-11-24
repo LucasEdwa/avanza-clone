@@ -162,7 +162,7 @@ export default function Home() {
           <div>
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Ha koll på sparandet i mobilen</h2>
             <p className="mt-3 text-muted">
-              Följ kurser i realtid, få notiser när dina ordrar går igenom och när en kursvarning slår till. Spira fungerar lika bra i mobilen
+              Följ kurserna löpande, få notiser när dina ordrar går igenom och när en kursvarning slår till. Spira fungerar lika bra i mobilen
               som på datorn, och du kan lägga till den på hemskärmen.
             </p>
             <ul className="mt-5 space-y-2 text-sm">

@@ -335,7 +335,7 @@ export const SPARA: Record<string, PageDef> = {
     blocks: [
       { type: "split", title: "Hjälp även för företag", text: "Portföljförvaltningen finns för både privatpersoner och företag som vill placera överskottslikviditet.", art: "building" },
       { type: "widget", title: "Välj inriktning och se avgiften", widget: "portfolio-fee" },
-      { type: "features", title: "Varför välja portföljförvaltning?", cols: 3, items: [{ icon: "chart", title: "Datadriven", text: "Fördelningen justeras löpande utifrån marknadsdata och riskmodeller." }, { icon: "shield", title: "Transparent", text: "Du ser alla innehav och transaktioner i realtid." }, { icon: "percent", title: "Låg avgift", text: "En fast årlig avgift som täcker allt." }] },
+      { type: "features", title: "Varför välja portföljförvaltning?", cols: 3, items: [{ icon: "chart", title: "Datadriven", text: "Fördelningen justeras löpande utifrån marknadsdata och riskmodeller." }, { icon: "shield", title: "Transparent", text: "Du ser alla innehav och transaktioner löpande." }, { icon: "percent", title: "Låg avgift", text: "En fast årlig avgift som täcker allt." }] },
       { type: "faq", items: [{ q: "Hur mycket behöver jag?", a: "Lägsta belopp är 1 miljon kronor." }, { q: "Kan jag byta inriktning?", a: "Ja, du kan byta mellan Mix och Stabil när du vill." }, { q: "Vilka konton kan jag använda?", a: "Kapitalförsäkring, ISK och företagskonton." }, { q: "Hur rapporteras resultatet?", a: "Du får en kvartalsrapport och kan följa utvecklingen dagligen." }] },
     ],
   },

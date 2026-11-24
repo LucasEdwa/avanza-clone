@@ -37,7 +37,7 @@ export function LiveQuote({ id, initial, currency, decimals = 2 }: { id: number;
           {signed(q.change, d)} ({pct(q.changePct)})
         </span>
       </div>
-      <div className="mt-1 text-xs text-muted">Senast uppdaterad {timeSv(q.marketTime ?? q.updatedAt)} · uppdateras automatiskt</div>
+      <div className="mt-1 text-xs text-muted">Senast uppdaterad {timeSv(q.marketTime ?? q.updatedAt)} · uppdateras automatiskt · kurser kan vara fördröjda ca 15 min</div>
     </div>
   );
 }
