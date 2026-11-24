@@ -8,6 +8,7 @@ import { makePersonnummer } from "../src/lib/personnummer";
 import { calcCourtage, calcFxFee } from "../src/lib/courtage";
 import { addTradingDays } from "../src/lib/market-hours";
 import { STOCKS, ETFS, INDICES, FUNDS } from "./catalog";
+import { getPerfMany } from "../src/lib/market/performance";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -426,6 +427,8 @@ async function seedDemoUser(insts: Inst[]) {
 
 async function main() {
   const insts = await seedInstruments();
+  console.log("Computing historical returns…");
+  await getPerfMany(insts.filter((i) => ["STOCK", "FUND", "ETF"].includes(i.type)).map((i) => i.symbol));
   if (!process.argv.includes("--instruments-only")) await seedDemoUser(insts);
   console.log("Seed complete.");
   process.exit(0);

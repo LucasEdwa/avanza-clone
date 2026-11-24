@@ -2,10 +2,11 @@ import { and, eq, inArray, sql, type SQL } from "drizzle-orm";
 import { db, schema } from "@/db";
 import type { Instrument, Quote } from "@/db/schema";
 import { liveQuotes } from "./live";
+import { getPerfMany, type Perf } from "./performance";
 
-export type Row = Instrument & { quote: Quote | undefined; owners: number };
+export type Row = Instrument & { quote: Quote | undefined; owners: number; perf?: Perf; buys24h?: number };
 
-export async function listInstruments(types: Instrument["type"][], where?: SQL): Promise<Row[]> {
+export async function listInstruments(types: Instrument["type"][], where?: SQL, opts: { perf?: boolean } = {}): Promise<Row[]> {
   const rows = await db
     .select()
     .from(schema.instruments)
@@ -17,5 +18,12 @@ export async function listInstruments(types: Instrument["type"][], where?: SQL):
     .innerJoin(schema.accounts, eq(schema.accounts.id, schema.holdings.accountId))
     .groupBy(schema.holdings.instrumentId);
   const om = new Map(owners.map((o) => [o.id, o.c]));
-  return rows.map((r) => ({ ...r, quote: quotes.get(r.id), owners: om.get(r.id) ?? 0 }));
+  const buys = await db
+    .select({ id: schema.orders.instrumentId, c: sql<number>`count(*)::int` })
+    .from(schema.orders)
+    .where(and(eq(schema.orders.side, "BUY"), sql`${schema.orders.createdAt} > now() - interval '24 hours'`))
+    .groupBy(schema.orders.instrumentId);
+  const bm = new Map(buys.map((b) => [b.id, b.c]));
+  const perf = opts.perf ? await getPerfMany(rows.map((r) => r.symbol)) : null;
+  return rows.map((r) => ({ ...r, quote: quotes.get(r.id), owners: om.get(r.id) ?? 0, buys24h: bm.get(r.id) ?? 0, perf: perf?.get(r.symbol) }));
 }

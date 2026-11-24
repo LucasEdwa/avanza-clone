@@ -4,6 +4,8 @@ export async function register() {
   const { runTick } = await import("./lib/ticker");
   const g = globalThis as unknown as { __spiraTicker?: NodeJS.Timeout };
   if (g.__spiraTicker) return;
+  // Warm the historical-returns cache in the background
+  import("./lib/warm").then((m) => m.warmPerformance()).catch(() => {});
   // Background order matcher / alerts / monthly savings – every 30 seconds.
   g.__spiraTicker = setInterval(() => {
     runTick().catch((e) => console.error("[ticker]", (e as Error).message));
