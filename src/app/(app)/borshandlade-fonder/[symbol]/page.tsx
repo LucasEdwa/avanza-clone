@@ -8,7 +8,8 @@ export async function generateMetadata({ params }: PageProps<"/borshandlade-fond
   return { title: i ? `${i.name} (${i.ticker})` : "Instrument" };
 }
 
-export default async function Page({ params }: PageProps<"/borshandlade-fonder/[symbol]">) {
+export default async function Page({ params, searchParams }: PageProps<"/borshandlade-fonder/[symbol]">) {
   const { symbol } = await params;
-  return <InstrumentView symbol={symbol} expected="ETF" />;
+  const sida = (await searchParams).sida;
+  return <InstrumentView side={sida === "salj" ? "SELL" : sida === "kop" ? "BUY" : undefined} symbol={symbol} expected="ETF" />;
 }

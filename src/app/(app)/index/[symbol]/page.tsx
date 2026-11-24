@@ -8,7 +8,8 @@ export async function generateMetadata({ params }: PageProps<"/index/[symbol]">)
   return { title: i ? `${i.name} (${i.ticker})` : "Instrument" };
 }
 
-export default async function Page({ params }: PageProps<"/index/[symbol]">) {
+export default async function Page({ params, searchParams }: PageProps<"/index/[symbol]">) {
   const { symbol } = await params;
-  return <InstrumentView symbol={symbol} expected="INDEX" />;
+  const sida = (await searchParams).sida;
+  return <InstrumentView side={sida === "salj" ? "SELL" : sida === "kop" ? "BUY" : undefined} symbol={symbol} expected="INDEX" />;
 }

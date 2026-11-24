@@ -21,7 +21,7 @@ import { AlertButton, WatchButton } from "./watch-button";
 
 const REC: Record<string, string> = { strong_buy: "Starkt köp", buy: "Köp", hold: "Behåll", underperform: "Underprestera", sell: "Sälj" };
 
-export async function InstrumentView({ symbol, expected }: { symbol: string; expected: "STOCK" | "FUND" | "ETF" | "INDEX" }) {
+export async function InstrumentView({ symbol, expected, side }: { symbol: string; expected: "STOCK" | "FUND" | "ETF" | "INDEX"; side?: "BUY" | "SELL" }) {
   const inst = await getInstrument(symbol);
   if (!inst) notFound();
   const correctPath = instrumentPath(inst);
@@ -314,6 +314,7 @@ export async function InstrumentView({ symbol, expected }: { symbol: string; exp
                   tradedVolumeSek={user.tradedVolumeSek}
                   fx={rate}
                   defaultValidUntil={defaultValidity(inst.symbol)}
+                  defaultSide={side}
                   marketOpen={open}
                 />
               ) : (
