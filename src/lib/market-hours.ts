@@ -123,3 +123,38 @@ export function fundExecutionTime(now = new Date()): Date {
 export function marketStatusText(venue: Venue = "STO", now = new Date()): string {
   return isMarketOpen(venue, now) ? "Öppen" : "Stängd";
 }
+
+const HOLIDAY_NAMES: Record<string, string> = {
+  "01-01": "Nyårsdagen",
+  "01-06": "Trettondedag jul",
+  "05-01": "Första maj",
+  "06-06": "Nationaldagen",
+  "12-24": "Julafton",
+  "12-25": "Juldagen",
+  "12-26": "Annandag jul",
+  "12-31": "Nyårsafton",
+};
+const MOVABLE: Record<string, string> = {
+  "2025-04-18": "Långfredagen",
+  "2025-04-21": "Annandag påsk",
+  "2025-05-29": "Kristi himmelsfärd",
+  "2025-06-20": "Midsommarafton",
+  "2026-04-03": "Långfredagen",
+  "2026-04-06": "Annandag påsk",
+  "2026-05-14": "Kristi himmelsfärd",
+  "2026-06-19": "Midsommarafton",
+  "2027-03-26": "Långfredagen",
+  "2027-03-29": "Annandag påsk",
+  "2027-05-06": "Kristi himmelsfärd",
+  "2027-06-25": "Midsommarafton",
+};
+
+/** Upcoming exchange holidays (weekdays only) for the trading calendar page. */
+export function upcomingHolidays(venue: "STO" | "US", from = stockholmDate(), n = 12) {
+  const set = venue === "STO" ? STO_HOLIDAYS : US_HOLIDAYS;
+  return [...set]
+    .filter((d) => d >= from)
+    .sort()
+    .slice(0, n)
+    .map((d) => ({ date: d, name: venue === "STO" ? (MOVABLE[d] ?? HOLIDAY_NAMES[d.slice(5)] ?? "Helgdag") : "Amerikansk helgdag" }));
+}
