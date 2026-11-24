@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-const PROTECTED = ["/min-ekonomi", "/bevakningar", "/kursvarningar", "/notiser", "/profil", "/handla"];
+const PROTECTED = ["/min-ekonomi", "/bevakningar", "/kursvarningar", "/notiser", "/profil"];
 
 /** Optimistic check only – real session validation happens in the server (requireUser). */
 export function proxy(req: NextRequest) {

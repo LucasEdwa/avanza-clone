@@ -1,6 +1,8 @@
 import { num, price } from "@/lib/format";
 import { roundToTick, tickSize } from "@/lib/ticks";
 
+const minuteSeed = () => Math.floor(Date.now() / 60000);
+
 function rand(seed: number) {
   const x = Math.sin(seed) * 10000;
   return x - Math.floor(x);
@@ -15,7 +17,7 @@ export function OrderDepth({ symbol, bid, ask, last, avgVolume, currency }: { sy
   const t = tickSize(last, currency);
   const b0 = bid ?? roundToTick(last - t, currency, "down");
   const a0 = ask && ask > b0 ? ask : roundToTick(b0 + t, currency, "up");
-  const seedBase = [...symbol].reduce((s, c) => s + c.charCodeAt(0), 0) + Math.floor(Date.now() / 60000);
+  const seedBase = [...symbol].reduce((s, c) => s + c.charCodeAt(0), 0) + minuteSeed();
   const scale = Math.max(50, Math.round((avgVolume ?? 100000) / 400));
   const levels = Array.from({ length: 5 }, (_, i) => ({
     bidP: b0 - i * t,

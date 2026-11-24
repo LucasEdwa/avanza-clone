@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { and, desc, eq, inArray } from "drizzle-orm";
-import { ArrowDownToLine, ArrowLeftRight, ArrowUpFromLine, CalendarClock, Plus } from "lucide-react";
+import { ArrowDownToLine, ArrowLeftRight, ArrowUpFromLine, Plus } from "lucide-react";
 import { db, schema } from "@/db";
 import { requireUser } from "@/lib/auth";
 import { getHistory, getPortfolio } from "@/lib/portfolio";

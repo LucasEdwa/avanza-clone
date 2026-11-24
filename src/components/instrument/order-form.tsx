@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Minus, Plus } from "lucide-react";
 import { placeOrderAction } from "@/app/actions/trading";
@@ -52,7 +52,7 @@ export function OrderForm(props: {
   const decimals = p ? tickDecimals(p, inst.currency) : 2;
   const deviation = quote.last && p ? Math.abs(p / quote.last - 1) : 0;
 
-  const error = useMemo(() => {
+  const error = ((): string | null => {
     if (!acc) return "Välj konto";
     if (isFund) {
       if (side === "BUY") {
@@ -72,7 +72,7 @@ export function OrderForm(props: {
     if (side === "BUY" && total > acc.buyingPower) return "Otillräcklig köpkraft";
     if (side === "SELL" && q > acc.available) return `Du har ${num(acc.available, 0)} st tillgängliga`;
     return null;
-  }, [acc, isFund, side, amt, q, p, type, trigger, total, inst]);
+  })();
 
   const step = (dir: 1 | -1) => {
     const base = p || quote.last || 0;

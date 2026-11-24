@@ -5,12 +5,14 @@ import { logout } from "@/app/actions/session";
 
 /** Bank-style inactivity logout with a warning one minute before. */
 export function SessionTimer({ idleMinutes }: { idleMinutes: number }) {
-  const last = useRef(Date.now());
-  const lastPing = useRef(Date.now());
+  const last = useRef(0);
+  const lastPing = useRef(0);
   const [warn, setWarn] = useState(false);
   const [left, setLeft] = useState(60);
 
   useEffect(() => {
+    last.current = Date.now();
+    lastPing.current = Date.now();
     const act = () => {
       last.current = Date.now();
       if (Date.now() - lastPing.current > 60_000) {
