@@ -126,6 +126,28 @@ Last updated: 2026-11-24.
 - ✅ "Samla ditt sparande", "Aktuellt från Spira" cards, interactive savings calculator (compound interest)
 - ✅ "Så kommer du igång" steps, mobile section, "Lär dig mer", "Redo för nästa steg?", trust section, risk information, full footer
 
+## Sprint 13 – Site navigation & product pages ✅
+Menu tree mirrors the original site's header link for link (read from the live site with a headless browser); all page text is written for Spira.
+- ✅ Header dropdowns: Spara & investera (with flyout submenus), Bolån, Pension, Nyheter, Lär dig mer, Kundservice; mobile accordion menu
+- ✅ One shared page `/info/[slug]` renders every content topic, with a side menu for switching topics (steps, FAQ, calculators)
+- ✅ **Börsen idag**: index map, Nordic/world/European indices, commodities, currencies, US rates, Stockholm winners/losers with Köp/Sälj, news, company calendar (reports and ex-dividend dates), OMXS30 chart
+- ✅ **Handla aktier**: Aktieinspiration (top lists, countries, sectors, all sectors accordion, shortcuts), Aktiescreener (search, 6 filter dropdowns, sortable columns incl. returns this year / 1 year, "Visa fler"), Externa analyser (login wall; analyst consensus, target price, upside)
+- ✅ **Handla fonder**: Inspiration (6 numbered top lists), Kategorier (region and theme tiles), Alla fonder (column tabs Sammanfattning/Utveckling/Avgifter/Fondinfo/Handelsinfo, filters, risk bars, Spira rating)
+- ✅ Historical returns (1 mån, 3 mån, i år, 1/3/5 år) from Yahoo history, cached 12 h
+- ✅ ETF list; product list pages for trackers, Bull & Bear, Mini Futures, Turbos, options, bonds, rights (🟡 empty: no free data source)
+- ✅ Calculators: savings, mortgage ("Hur mycket får jag låna?"), mortgage comparison, securities credit with rate tiers, Autopilot risk levels, pension forecast; mortgage rate table by binding period and loan-to-value (example rates)
+- ✅ Trading calendar with opening hours per market and deviating dates for Sweden and the USA
+- ✅ Customer service page with searchable FAQ
+- 🟡 Not built from the original: economic calendar, sustainability ratings / exclusion filters (no free data), certificate/warrant/option data
+
+## Sprint 14 – Page-by-page layout fidelity ✅
+Every linked page on the original site was opened in a headless browser and its section structure recorded (order of sections, number of items, calculators, tables, FAQs). Each Spira page reproduces that structure with Spira's own wording, illustrations and colours.
+- ✅ Section system: hero with illustration and related-page chips, feature grids, split sections, numbered steps, tables, card grids, call-to-action bands, figures, product news, FAQ accordions
+- ✅ 60+ content pages rewritten (Spara & investera, Företag, Bolån, Pension, Lär dig mer, Kundservice, ISK/KF/AF)
+- ✅ New calculators: "Hur mycket får jag låna?" in four sections (borrowers, home, household, loans) with left-to-live-on check, rate finder by loan-to-value, portfolio management fee, pension glide path
+- ✅ 85 menu and in-page links verified (HTTP 200)
+- 🟡 Wording, images and brand are intentionally not copied from the original
+
 ---
 
 ## Backlog (not built: needs real-world contracts or paid data)
